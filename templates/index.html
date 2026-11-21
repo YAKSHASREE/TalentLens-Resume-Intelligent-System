@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TalentLens | AI Resume Analyzer</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f5fa;
+            color: #222;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #4338ca;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 7px;
+            background: #4338ca;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 15px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            background: #dcfce7;
+            color: #166534;
+            padding: 15px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+        }
+
+        .analysis {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #4338ca;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            font-size: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            margin-top: 30px;
+            font-size: 13px;
+        }
+
+        @media(max-width: 600px) {
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>TalentLens</h1>
+
+        <p>
+            RAG-Based Resume Intelligence System
+        </p>
+
+        <p>
+            Analyze your resume against a job description
+            using Generative AI.
+        </p>
+
+    </div>
+
+
+    <!-- UPLOAD FORM -->
+
+    <div class="card">
+
+        <h2>Resume Analysis</h2>
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+        <form method="POST"
+              action="/"
+              enctype="multipart/form-data">
+
+            <label for="resume">
+                Upload Your Resume (PDF)
+            </label>
+
+            <input
+                type="file"
+                id="resume"
+                name="resume"
+                accept=".pdf"
+                required
+            >
+
+            <label for="job_description">
+                Enter Job Description
+            </label>
+
+            <textarea
+                id="job_description"
+                name="job_description"
+                placeholder="Paste the complete job description here..."
+                required
+            ></textarea>
+
+            <button type="submit">
+                Analyze My Resume
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ANALYSIS RESULT -->
+
+    {% if analysis %}
+
+        <div class="card">
+
+            <h2>Resume Analysis Report</h2>
+
+            {% if filename %}
+
+                <div class="success">
+                    Analysis completed for: {{ filename }}
+                </div>
+
+            {% endif %}
+
+            <div class="analysis">{{ analysis }}</div>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        <p>
+            TalentLens | AI-Powered Resume Intelligence
+        </p>
+
+        <p>
+            Powered by Python, Flask, Gemini AI and FAISS
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>
